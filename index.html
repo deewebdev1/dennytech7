@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free 6-Day Video Editing & Animation Training</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root {
+      --red: #D90016;
+      --red-bright: #FF1A2E;
+      --cream: #F5F0E8;
+      --off: #C8C0B0;
+      --black: #090909;
+      --panel: #0F0F0F;
+      --border: rgba(255,255,255,0.07);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--cream);
+      font-family: 'Syne', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Film grain */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: -100px;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.5;
+      animation: grain 0.9s steps(1) infinite;
+    }
+
+    @keyframes grain {
+      0%   { transform: translate(0, 0); }
+      20%  { transform: translate(-3%, 2%); }
+      40%  { transform: translate(2%, -3%); }
+      60%  { transform: translate(-1%, 3%); }
+      80%  { transform: translate(3%, -1%); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* ══════════════════════════════
+       TOP NAV BAR
+    ══════════════════════════════ */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      z-index: 10;
+    }
+
+    .topbar-brand {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.35);
+    }
+
+    .topbar-brand span { color: var(--red); }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .live-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #FF6B6B;
+    }
+
+    .live-dot {
+      width: 6px; height: 6px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: pulse 1.3s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(217,0,22,0.7); }
+      50%       { box-shadow: 0 0 0 5px rgba(217,0,22,0); }
+    }
+
+    /* ══════════════════════════════
+       MAIN SPLIT LAYOUT
+    ══════════════════════════════ */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      min-height: calc(100vh - 57px);
+      position: relative;
+    }
+
+    /* ── LEFT PANEL ── */
+    .left {
+      padding: 4rem 3rem 4rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Big ghost number behind left panel */
+    .left::before {
+      content: '6';
+      position: absolute;
+      bottom: -8%;
+      left: -5%;
+      font-family: 'Anton', sans-serif;
+      font-size: 55vw;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(217,0,22,0.06);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .left-top { position: relative; z-index: 2; }
+
+    .issue-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.25);
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .issue-label::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--red);
+    }
+
+    /* Big vertical headline */
+    .big-headline {
+      position: relative;
+      z-index: 2;
+    }
+
+    .big-headline .kicker {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .big-headline h1 {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(4.5rem, 9vw, 8rem);
+      line-height: 0.9;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      color: var(--cream);
+    }
+
+    .big-headline h1 .red { color: var(--red); }
+
+    .big-headline h1 .outline {
+      color: transparent;
+      -webkit-text-stroke: 1px var(--cream);
+    }
+
+    .big-headline h1 .outline-red {
+      color: transparent;
+      -webkit-text-stroke: 1px var(--red);
+    }
+
+    /* ── HORIZONTAL RULE ── */
+    .h-rule {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 2.5rem 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .h-rule-main {
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .h-rule-red {
+      width: 60px;
+      height: 1px;
+      background: var(--red);
+    }
+
+    /* ── DESCRIPTOR ── */
+    .descriptor {
+      max-width: 440px;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: rgba(245,240,232,0.5);
+      line-height: 1.8;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 2.5rem;
+    }
+
+    .descriptor strong { color: var(--cream); font-weight: 700; }
+
+    /* ── PILLS ── */
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .pill {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.45);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 0.4rem 0.8rem;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+
+    .pill i { color: var(--red); font-size: 0.55rem; }
+    .pill:hover { border-color: rgba(217,0,22,0.4); color: var(--cream); }
+
+    /* ── RIGHT PANEL ── */
+    .right {
+      background: var(--panel);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Diagonal red slash on right panel */
+    .right::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(145deg,
+        transparent 0%,
+        transparent 55%,
+        rgba(217,0,22,0.04) 55%,
+        rgba(217,0,22,0.04) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* Subtle grid */
+    .right::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    .right-inner {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top part of right panel */
+    .right-top {
+      padding: 3rem 2.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .right-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.25);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Big free label */
+    .free-label {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(4rem, 7vw, 6rem);
+      text-transform: uppercase;
+      line-height: 0.9;
+      color: var(--red);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .free-label .free-outline {
+      color: transparent;
+      -webkit-text-stroke: 2px var(--red);
+      opacity: 0.35;
+    }
+
+    .free-sub {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.35);
+      margin-bottom: 2rem;
+    }
+
+    /* Stat stack */
+    .stat-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 0;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat-item:first-child { border-top: 1px solid var(--border); }
+
+    .stat-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.3);
+    }
+
+    .stat-val {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.03em;
+      color: var(--cream);
+    }
+
+    .stat-val.red { color: var(--red); }
+
+    /* CTA block at bottom of right */
+    .right-cta {
+      padding: 2rem 2.5rem;
+      background: var(--red);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .right-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .cta-urgency {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: #fff;
+      color: var(--red);
+      text-decoration: none;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1rem 1.4rem;
+      border-radius: 2px;
+      position: relative;
+      z-index: 2;
+      transition: all 0.25s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    .cta-btn:hover {
+      background: var(--black);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .cta-btn-left {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .cta-btn i { font-size: 1.2rem; }
+
+    .cta-note {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-top: 0.8rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ══════════════════════════════
+       BOTTOM STRIP
+    ══════════════════════════════ */
+    .bottom-strip {
+      border-top: 1px solid var(--border);
+      padding: 1.4rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: rgba(255,255,255,0.01);
+    }
+
+    .strip-copy {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.2);
+    }
+
+    .strip-copy span { color: var(--red); opacity: 0.6; }
+
+    .strip-icons {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .strip-icon {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.2);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .strip-icon i { color: rgba(217,0,22,0.5); font-size: 0.65rem; }
+
+    /* ══════════════════════════════
+       ANIMATIONS
+    ══════════════════════════════ */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+    .delay-6 { animation-delay: 0.6s; }
+
+    /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+    @media (max-width: 820px) {
+      .split {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .left {
+        padding: 3rem 1.5rem;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .left::before { font-size: 80vw; }
+
+      .right { min-height: auto; }
+
+      .right-top { padding: 2.5rem 1.5rem; }
+
+      .right-cta { padding: 1.8rem 1.5rem; }
+
+      .topbar { padding: 1rem 1.5rem; }
+
+      .bottom-strip {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.2rem 1.5rem;
+      }
+
+      .strip-icons { gap: 1rem; }
+    }
+
+    @media (max-width: 480px) {
+      .big-headline h1 { font-size: clamp(3.5rem, 14vw, 5rem); }
+      .free-label { font-size: 3.5rem; }
+    }
+  </style>
+
+  <!-- Meta Pixel -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1054586146925058');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1054586146925058&ev=PageView&noscript=1"/></noscript>
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+  <nav class="topbar">
+    <div class="topbar-brand">Dennytech <span>Digital</span> Academy</div>
+    <div class="topbar-right">
+      <div class="live-badge">
+        <span class="live-dot"></span>
+        Enrollment Open
+      </div>
+    </div>
+  </nav>
+
+  <!-- SPLIT LAYOUT -->
+  <main class="split">
+
+    <!-- LEFT: EDITORIAL HEADLINE PANEL -->
+    <div class="left">
+
+      <div class="left-top">
+        <p class="issue-label fade-up">Free Training Program — 2025 Edition</p>
+
+        <div class="big-headline">
+          <span class="kicker fade-up delay-1">6-Day Intensive</span>
+          <h1 class="fade-up delay-2">
+            <span class="outline">Video</span><br>
+            <span class="red">Edit</span><span class="outline-red">ing</span><br>
+            <span>& Anim</span><br>
+            <span class="outline">ation</span>
+          </h1>
+        </div>
+
+        <div class="h-rule fade-up delay-3">
+          <div class="h-rule-red"></div>
+          <div class="h-rule-main"></div>
+        </div>
+
+        <p class="descriptor fade-up delay-3">
+          A <strong>free, structured 6-day program</strong> teaching you professional
+          video editing and animation from scratch — using nothing but your
+          <strong>smartphone</strong>.
+        </p>
+
+        <div class="pill-row fade-up delay-4">
+          <span class="pill"><i class="fa-solid fa-mobile-screen"></i> Smartphone Only</span>
+          <span class="pill"><i class="fa-solid fa-circle-check"></i> 100% Free</span>
+          <span class="pill"><i class="fa-solid fa-wifi"></i> Needs Data</span>
+          <span class="pill"><i class="fa-solid fa-user-graduate"></i> Beginner Friendly</span>
+          <span class="pill"><i class="fa-brands fa-whatsapp"></i> Via WhatsApp</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: CTA PANEL -->
+    <div class="right">
+      <div class="right-inner">
+
+        <div class="right-top">
+          <p class="right-eyebrow fade-up">What you get</p>
+
+          <div class="free-label fade-up delay-1">
+            Free<br><span class="free-outline">Free</span>
+          </div>
+          <p class="free-sub fade-up delay-2">No payment. No catch.</p>
+
+          <div class="stat-stack fade-up delay-2">
+            <div class="stat-item">
+              <span class="stat-label">Duration</span>
+              <span class="stat-val">6 Days</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Format</span>
+              <span class="stat-val">Video Lessons</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Requirement</span>
+              <span class="stat-val">Smartphone</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Experience Needed</span>
+              <span class="stat-val red">Zero</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Cost</span>
+              <span class="stat-val red">₦0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="right-cta fade-up delay-3">
+          <p class="cta-urgency">⚠ Limited spots — act fast</p>
+          <a href="https://chat.whatsapp.com/HOdoBNEU0juK0HWu25cDuX?mode=gi_t" class="cta-btn" target="_blank" rel="noopener">
+            <span class="cta-btn-left">
+              <i class="fa-brands fa-whatsapp"></i>
+              Join Free Training
+            </span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <p class="cta-note">Tap to join the WhatsApp group instantly</p>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- BOTTOM STRIP -->
+  <div class="bottom-strip">
+    <p class="strip-copy">
+      &copy; <span id="yr"></span> Dennytech Digital Academy <span>·</span> All Rights Reserved
+    </p>
+    <div class="strip-icons">
+      <span class="strip-icon"><i class="fa-solid fa-calendar-days"></i> 6 Structured Days</span>
+      <span class="strip-icon"><i class="fa-solid fa-film"></i> Video + Animation</span>
+      <span class="strip-icon"><i class="fa-solid fa-trophy"></i> Beginner Friendly</span>
+    </div>
+  </div>
+
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+
+</body>
+</html>
